@@ -17,6 +17,15 @@ function findRecord (str) {
 		})
 	})
 }
+
+function findAllRecords () {
+	return new Promise((resolve, reject) => {
+		db.find({}, (err, docs) => {
+			resolve(docs);
+		})
+	})
+}
+
 function updateRecord(str) {
 	let obj = JSON.parse(str);
 	db.update( obj[0] , obj[1], {});
@@ -40,6 +49,14 @@ http.createServer((req, res) => {
 	} else if (req.url == '/find-rec') {
 		req.on('data', (chunk) => {
 			findRecord(chunk)
+				.then((data) => {
+					res.write(JSON.stringify(data));
+					res.end();
+				})
+		});
+	} else if (req.url == '/find-all-rec') {
+		req.on('data', (chunk) => {
+			findAllRecord()
 				.then((data) => {
 					res.write(JSON.stringify(data));
 					res.end();
