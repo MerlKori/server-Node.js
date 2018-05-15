@@ -6,7 +6,7 @@ db.loadDatabase();
 
 function createdRecord(str) {
 	let obj = JSON.parse(str)
-	db.insert({title : obj.title, desc: obj.desc});
+	db.insert(obj);
 }
 
 function findRecord (str) {
@@ -38,13 +38,19 @@ function removeRecord(str) {
 
 
 http.createServer((req, res) => {
-	res.writeHead(200, {'Content-Type': 'text/html'});
+	// res.writeHead(200, {'Content-Type': 'text/html'});
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
 
 	if (req.url == '/created') {
 		req.on('data', (chunk) => {
 			createdRecord(chunk);
-			res.write('ok');
-			res.end();
+			findAllRecords()
+				.then((data) => {
+					res.write(JSON.stringify(data));
+					res.end();
+				})
 		});
 	} else if (req.url == '/find-rec') {
 		req.on('data', (chunk) => {
@@ -55,8 +61,8 @@ http.createServer((req, res) => {
 				})
 		});
 	} else if (req.url == '/find-all-rec') {
-		req.on('data', (chunk) => {
-			findAllRecord()
+		req.on('data', () => {
+			findAllRecords()
 				.then((data) => {
 					res.write(JSON.stringify(data));
 					res.end();
@@ -64,15 +70,21 @@ http.createServer((req, res) => {
 		});
 	} else if (req.url == '/update')  {
 		req.on('data', (chunk) => {
-			updateRecord(chunk)
-			res.write('ok');
-			res.end();
+			updateRecord(chunk);
+			findAllRecords()
+				.then((data) => {
+					res.write(JSON.stringify(data));
+					res.end();
+				})
 		});
 	} else if (req.url == '/rem-rec')  {
 		req.on('data', (chunk) => {
-			removeRecord(chunk)
-			res.write('ok');
-			res.end();
+			removeRecord(chunk);
+			findAllRecords()
+				.then((data) => {
+					res.write(JSON.stringify(data));
+					res.end();
+				})
 		});
 	} else {
 		// error
