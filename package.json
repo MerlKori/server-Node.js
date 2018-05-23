@@ -1,0 +1,16 @@
+{
+  "name": "organizer-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Merl Kori",
+  "dependencies": {
+    "nedb": "^1.8.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "9.5.0",
+    "npm": "5.6.0"
+  },
+  "license": "ISC"
+}
