@@ -1,6 +1,7 @@
 var http = require("http");
 var Datastore = require('nedb');
 var db = new Datastore({filename: 'records'});
+var PORT = process.env.PORT || 9595;
 
 db.loadDatabase();
 
@@ -90,4 +91,4 @@ http.createServer((req, res) => {
 		// error
 		res.end();
 	}
-  }).listen(9595, () => console.log('server running'));
+  }).listen(PORT, () => console.log('server running'));
