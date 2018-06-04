@@ -1,13 +1,21 @@
 {
   "name": "organizer-server",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "author": "Merl Kori",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
     "nedb": "^1.8.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  },
   "engines": {
     "node": "9.5.0",
     "npm": "5.6.0"
