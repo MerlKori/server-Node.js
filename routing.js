@@ -5,6 +5,7 @@ const app = require('./server');
 // handlers
 const autorization = require('./handlers/autorization.js');
 const dbActions = require('./handlers/db-actions');
+const addKey = require('./handlers/add-key');
 
 // data base
 const getDB = require('./db');
@@ -48,11 +49,14 @@ module.exports = () => {
 
 
 	app.post('/registration', function (req, res) {
-		autorization.createUser(req.body);
-		dbActions.find(autorization.db, req.body)
-			.then((data) => {
-				res.send(data);
-			})
-		
+		autorization.createUser(req.body).then((key) => {
+			res.send(key);
+		})
+	})
+
+	app.post('/authentication', function (req, res) {
+		autorization.login(req.body).then((key) => {
+			res.send(key);
+		})
 	})
 }
