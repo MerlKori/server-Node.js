@@ -31,5 +31,11 @@ module.exports = {
 			key = 'error';
 		}
 		return key;
+	},
+	searchUserData: async (keyVal) => {
+		const user = await dbActions.find(userDB, {key: keyVal});
+		let searchDB = createDB(user[0]._id);
+		searchDB.loadDatabase();
+		return searchDB;
 	}
 }

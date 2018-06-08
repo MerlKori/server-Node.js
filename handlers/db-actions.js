@@ -20,7 +20,7 @@ module.exports = {
 	update: (store, obj) => {
 		store.update( obj[0] , obj[1], {});
 	},
-	remove: (store, obj) => {
-		store.remove(obj, {});
+	remove: (store, id) => {
+		store.remove({_id: id}, {});
 	}
 }

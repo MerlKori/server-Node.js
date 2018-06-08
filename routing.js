@@ -20,31 +20,40 @@ db.loadDatabase();
 
 module.exports = () => {
 	app.post('/created', function (req, res) {
-		dbActions.create(db, req.body);
-		dbActions.findAll(db)
+		autorization.searchUserData(req.body.key).then((db) => {
+			dbActions.create(db, req.body);
+			dbActions.findAll(db)
 			.then((data) => {
 				res.send(data);
 			})
+		})
 	})
 	app.post('/findAll', function (req, res) {
-		dbActions.findAll(db)
+		autorization.searchUserData(req.body.key).then((db) => {
+			dbActions.findAll(db)
 			.then((data) => {
 				res.send(data);
 			})
+		})
 	})
 	app.post('/update', function (req, res) {
-		dbActions.update(db, req.body)
-		dbActions.findAll(db)
+		// console.log(req.body.changeData[0]._id);
+		autorization.searchUserData(req.body.key.key).then((db) => {
+			dbActions.update(db, req.body.changeData)
+			dbActions.findAll(db)
 			.then((data) => {
 				res.send(data);
 			})
+		})
 	})
 	app.post('/remove', function (req, res) {
-		dbActions.remove(db, req.body);
-		dbActions.findAll(db)
+		autorization.searchUserData(req.body.key).then((db) => {
+			dbActions.remove(db, req.body._id);
+			dbActions.findAll(db)
 			.then((data) => {
 				res.send(data);
 			})
+		})
 	})
 
 
